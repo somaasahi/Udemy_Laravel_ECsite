@@ -24,6 +24,10 @@
                                 <input type="email" id="email" name="email" value="{{ $owner->email}}" class="w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 placeholder-gray-500 placeholder-opacity-50" placeholder="Eメール">
                             </div>
                             <div class="mb-2">
+                                <label for="email" class="text-sm block">店名</label>
+                                <div class="w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 placeholder-gray-500 placeholder-opacity-50">{{ $owner->shop->name}}</div>
+                            </div>
+                            <div class="mb-2">
                                 <label for="password" class="text-sm block">パスワード</label>
                                 <input type="password" id="password" name="password" class="w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 placeholder-gray-500 placeholder-opacity-50">
                             </div>
