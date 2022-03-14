@@ -33,7 +33,7 @@ Route::prefix('shops')
         ->name('shops.index');
     Route::get('edit/{shop}',[ShopController::class, 'edit'])
         ->name('shops.edit');
-    Route::post('update/{owner}',[ShopController::class, 'update'])
+    Route::post('update/{shop}',[ShopController::class, 'update'])
         ->name('shops.update');
 
 });
