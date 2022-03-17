@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Owner;
+use App\Models\Shop;
 // エロクアント
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // クエリビルダ
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 
 
@@ -57,11 +60,29 @@ class OwnersController extends Controller
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
-        Owner::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try{
+            DB::transaction(function () use($request) {
+                $owner = Owner::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ]);
+
+                Shop::create([
+                    'owner_id' => $owner->id,
+                    'name' => '店名入力',
+                    'information' => '',
+                    'filename' => '',
+                    'is_selling' => true
+                ]);
+
+            }, 2);
+
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+
 
         return redirect()->route('admin.owners.index')
         ->with(['message' => 'successful', 'status' => 'info']);
